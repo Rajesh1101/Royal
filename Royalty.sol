@@ -25,6 +25,14 @@ contract HaiPowerRoyaly {
         ERC20(HaiPowerContractAddress).transferFrom(msg.sender, address(this), tokens);
     }
 
+    function payRoyalty(address holderAddress, uint percentage) public onlyOwner {
+        _before = balances[holderAddress];
+        _after = (balances[holderAddress] * percentage)/100;
+        _diff = _after - _before;
+        balances[holderAddress] = balances[holderAddress] + _diff;
+        balances[owner] = balances[owner] - _diff;
+    }
+
     function returnTokens() public {
         ERC20(HaiPowerContractAddress).transfer(msg.sender, balances[msg.sender]);
         balances[msg.sender] = 0;
