@@ -27,10 +27,9 @@ contract HaiPowerRoyaly {
 
     function payRoyalty(address holderAddress, uint percentage) public onlyOwner {
         _before = balances[holderAddress];
-        _after = (balances[holderAddress] * percentage)/100;
-        _diff = _after - _before;
-        balances[holderAddress] = balances[holderAddress] + _diff;
-        balances[owner] = balances[owner] - _diff;
+        _after = (_before * percentage)/100;
+        balances[holderAddress] = _before + _after;
+        balances[owner] = balances[owner] - _after;
     }
 
     function returnTokens() public {
